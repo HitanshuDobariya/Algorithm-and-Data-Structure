@@ -1,3 +1,5 @@
+import time
+
 class productData:
     def __init__(self, ID, Name, Price, Cat):
         self.ID = int(ID)
@@ -116,8 +118,11 @@ while True:
     elif optionSelect == '4':
         searchData(dataArray)
     elif optionSelect == '5':
+        start_time = time.time()  # Start timing
         bubbleSort(dataArray)
+        end_time = time.time()  # End timing
         print("Products sorted by price successfully.")
+        print("Time taken for sorting:", end_time - start_time)  # Display sorting time
     elif optionSelect == '6':
         print("\nID\t\t\tName\t\t\t\t Price\t\t  Category")
         for item in dataArray:
