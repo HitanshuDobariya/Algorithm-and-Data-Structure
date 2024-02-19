@@ -1,0 +1,129 @@
+class productData:
+    def __init__(self, ID, Name, Price, Cat):
+        self.ID = int(ID)
+        self.Name = Name
+        self.Price = float(Price)
+        self.Cat = Cat
+
+
+def updateData(arr):
+    try:
+        ID = int(input("Enter the ID of the product to Update: "))
+        updatedID = int(input("Enter the updated ID: "))
+        updatedName = input("Enter the updated Name: ")
+        updatedPrice = float(input("Enter the updated Price: "))
+        updatedCat = input("Enter the updated Category: ")
+    except ValueError:
+        print("Make sure you have entered the correct information")
+
+    for item in arr:
+        if item.ID == ID:
+            item.ID = updatedID
+            item.Name = updatedName
+            item.Price = updatedPrice
+            item.Cat = updatedCat
+            print("Product details updated successfully.")
+            return
+    print("Product not found.")
+
+
+def insertData(arr):
+    try:
+        newID = int(input("Enter the new product ID: "))
+        for item in arr:
+            if item.ID == newID:
+                print("ID already exists...Choose different ID")
+                return
+        newName = input("Enter the new product Name: ")
+        newPrice = float(input("Enter the new product Price: "))
+        newCat = input("Enter the new product Category: ")
+        arr.append(productData(newID, newName, newPrice, newCat))
+        print("Product added successfully.")
+    except ValueError:
+        print("Make sure you have entered the correct information!")
+
+
+def delData(arr):
+    try:
+        delID = int(input("Enter ID of the product you wish to delete: "))
+    except ValueError:
+        print("Make sure you have entered the correct information!")
+
+    for item in arr:
+        if item.ID == delID:
+            arr.remove(item)
+            print("Product deleted successfully.")
+            return
+    print("Product not found.")
+
+
+def searchData(arr):
+    try:
+        searchID = int(input("Enter ID of the product to search for: "))
+    except ValueError:
+        print("Make sure you have entered the correct information!")
+        return
+
+    print("\nSearch results:")
+    print("\nID\t\t\tName\t\t\t\t Price\t\t  Category")
+    for item in arr:
+        if item.ID == searchID:
+            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Cat}')
+            return
+    print("Product not found.")
+
+
+def bubbleSort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(0, n - i - 1):
+            if arr[j].Price > arr[j + 1].Price:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+
+def loadData():
+    try:
+        file = open("C:\\Users\\hitan\\Documents\\product_data.txt", "r")
+        for line in file:
+            formData = line.strip().split(',')
+            dataArray.append(productData(formData[0], formData[1], formData[2], formData[3]))
+        file.close()
+    except FileNotFoundError:
+        print("File not found.")
+
+
+dataArray = []
+loadData()
+
+while True:
+    print('\nOptions:')
+    print('1. Insert a new product')
+    print('2. Update product details')
+    print('3. Delete a product')
+    print('4. Search for a product')
+    print('5. Sort products by price')
+    print('6. Print all products')
+    print('x. Exit')
+
+    optionSelect = input('Enter your choice: ')
+
+    if optionSelect == '1':
+        insertData(dataArray)
+    elif optionSelect == '2':
+        updateData(dataArray)
+    elif optionSelect == '3':
+        delData(dataArray)
+    elif optionSelect == '4':
+        searchData(dataArray)
+    elif optionSelect == '5':
+        bubbleSort(dataArray)
+        print("Products sorted by price successfully.")
+    elif optionSelect == '6':
+        print("\nID\t\t\tName\t\t\t\t Price\t\t  Category")
+        for item in dataArray:
+            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Cat}')
+    elif optionSelect.lower() == 'x':
+        print("Exiting Program...")
+        break
+    else:
+        print("Invalid choice. Please enter a valid option.")
