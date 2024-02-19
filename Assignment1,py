@@ -1,11 +1,11 @@
 import time
 
 class productData:
-    def __init__(self, ID, Name, Price, Cat):
+    def __init__(self, ID, Name, Price, Category):
         self.ID = int(ID)
         self.Name = Name
         self.Price = float(Price)
-        self.Cat = Cat
+        self.Category = Category
 
 
 def updateData(arr):
@@ -14,16 +14,16 @@ def updateData(arr):
         updatedID = int(input("Enter the updated ID: "))
         updatedName = input("Enter the updated Name: ")
         updatedPrice = float(input("Enter the updated Price: "))
-        updatedCat = input("Enter the updated Category: ")
+        updatedCategory = input("Enter the updated Category: ")
     except ValueError:
-        print("Make sure you have entered the correct information")
+        print("Incorrect Information or type")
 
     for item in arr:
         if item.ID == ID:
             item.ID = updatedID
             item.Name = updatedName
             item.Price = updatedPrice
-            item.Cat = updatedCat
+            item.Category = updatedCategory
             print("Product details updated successfully.")
             return
     print("Product not found.")
@@ -34,22 +34,22 @@ def insertData(arr):
         newID = int(input("Enter the new product ID: "))
         for item in arr:
             if item.ID == newID:
-                print("ID already exists...Choose different ID")
+                print("ID already exists,Choose different ID")
                 return
         newName = input("Enter the new product Name: ")
         newPrice = float(input("Enter the new product Price: "))
-        newCat = input("Enter the new product Category: ")
-        arr.append(productData(newID, newName, newPrice, newCat))
+        newCategory = input("Enter the new product Category: ")
+        arr.append(productData(newID, newName, newPrice, newCategory))
         print("Product added successfully.")
     except ValueError:
-        print("Make sure you have entered the correct information!")
+        print("Incorrect Information or type")
 
 
 def delData(arr):
     try:
         delID = int(input("Enter ID of the product you wish to delete: "))
     except ValueError:
-        print("Make sure you have entered the correct information!")
+        print("Incorrect Information or type")
 
     for item in arr:
         if item.ID == delID:
@@ -63,14 +63,14 @@ def searchData(arr):
     try:
         searchID = int(input("Enter ID of the product to search for: "))
     except ValueError:
-        print("Make sure you have entered the correct information!")
+        print("Incorrect Information or type")
         return
 
     print("\nSearch results:")
     print("\nID\t\t\tName\t\t\t\t Price\t\t  Category")
     for item in arr:
         if item.ID == searchID:
-            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Cat}')
+            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Category}')
             return
     print("Product not found.")
 
@@ -88,13 +88,13 @@ def loadData():
         file = open("C:\\Users\\hitan\\Documents\\product_data.txt", "r")
         for line in file:
             formData = line.strip().split(',')
-            dataArray.append(productData(formData[0], formData[1], formData[2], formData[3]))
+            data.append(productData(formData[0], formData[1], formData[2], formData[3]))
         file.close()
     except FileNotFoundError:
         print("File not found.")
 
 
-dataArray = []
+data = []
 loadData()
 
 while True:
@@ -110,23 +110,23 @@ while True:
     optionSelect = input('Enter your choice: ')
 
     if optionSelect == '1':
-        insertData(dataArray)
+        insertData(data)
     elif optionSelect == '2':
-        updateData(dataArray)
+        updateData(data)
     elif optionSelect == '3':
-        delData(dataArray)
+        delData(data)
     elif optionSelect == '4':
-        searchData(dataArray)
+        searchData(data)
     elif optionSelect == '5':
         start_time = time.time()  # Start timing
-        bubbleSort(dataArray)
+        bubbleSort(data)
         end_time = time.time()  # End timing
         print("Products sorted by price successfully.")
         print("Time taken for sorting:", end_time - start_time)  # Display sorting time
     elif optionSelect == '6':
         print("\nID\t\t\tName\t\t\t\t Price\t\t  Category")
-        for item in dataArray:
-            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Cat}')
+        for item in data:
+            print(f'{item.ID}\t{item.Name.ljust(25)}{item.Price}\t\t{item.Category}')
     elif optionSelect.lower() == 'x':
         print("Exiting Program...")
         break
