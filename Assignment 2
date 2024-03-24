@@ -1,0 +1,67 @@
+import time
+
+# Merge Sort implementation
+def merge_sort(arr):
+    # Check if the array has more than one element
+    if len(arr) > 1:
+        # Calculate the middle index
+        mid = len(arr) // 2
+
+        # Divide the array into left and right halves
+        left_half = arr[:mid]
+        right_half = arr[mid:]
+
+        # Recursively call merge_sort on the left and right halves
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        # Merge the sorted left and right halves
+        i = j = k = 0
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                arr[k] = left_half[i]
+                i += 1
+            else:
+                arr[k] = right_half[j]
+                j += 1
+            k += 1
+
+        # Check if there are any remaining elements in left_half
+        while i < len(left_half):
+            arr[k] = left_half[i]
+            i += 1
+            k += 1
+
+        # Check if there are any remaining elements in right_half
+        while j < len(right_half):
+            arr[k] = right_half[j]
+            j += 1
+            k += 1
+
+        # Print the merging process for visualization
+        print(f"Merging: {left_half} | {right_half} -> {arr}")
+        time.sleep(0.5)  # Pause for visualization
+
+def get_input_array():
+    while True:
+        input_str = input("Enter the elements of the array separated by spaces (numeric values only): ")
+        input_list = input_str.split()
+
+        # Validate input to ensure all elements are numeric
+        try:
+            array_to_sort = [int(num) for num in input_list]
+            return array_to_sort
+        except ValueError:
+            print("Error: Please enter numeric values only.")
+            choice = input("Enter '1' to re-enter array, '2' to exit: ")
+            if choice == '2':
+                exit()
+
+# Get user input for the array
+array_to_sort = get_input_array()
+print(f"Initial Array: {array_to_sort}")
+
+# Call merge_sort on the array
+merge_sort(array_to_sort)
+
+print(f"Sorted Array: {array_to_sort}")
